@@ -1,0 +1,3 @@
+Overview of idea:
+
+Combine US energy data set with a boiled down voter data set to graph trends about energy by state voters
