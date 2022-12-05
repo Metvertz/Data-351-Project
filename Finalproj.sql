@@ -53,6 +53,8 @@ COPY projenergy
 FROM '/Users/metvertz/sqlenergy.csv'
 WITH(FORMAT CSV, HEADER);
 
+DROP TABLE projturnout;
+
 CREATE TABLE projturnout (
     State text,
     Stateabbr text,
@@ -65,7 +67,51 @@ COPY projturnout
 FROM '/Users/metvertz/sqlturnout.csv'
 WITH(FORMAT CSV, HEADER);
 
+
+-- Below this line is the work
+
+SELECT * FROM projenergy;
+
+SELECT * FROM projturnout;
+
 SELECT *
 FROM projenergy as pe
 LEFT JOIN projturnout as pt
 ON pe.statecodes = pt.stateabbr;
+
+/* 
+
+Our Main Topic of investigation is:
+What effect does the political identity of the state, have on it's energy consumption, output, price, and cleanliness
+
+*/
+
+SELECT *
+FROM projenergy as pe
+LEFT JOIN projturnout as pt
+ON pe.statecodes = pt.stateabbr;
+
+COPY (SELECT *
+FROM projenergy as pe
+LEFT JOIN projturnout as pt
+ON pe.statecodes = pt.stateabbr)
+TO '/Users/metvertz/sqljoined.csv'
+WITH(FORMAT CSV, HEADER);
+
+
+
+SELECT statecodes, avg(NatGasC2012/popestimate2012)
+FROM projenergy as pe
+LEFT JOIN projturnout as pt
+ON pe.statecodes = pt.stateabbr
+GROUP BY statecodes
+ORDER BY avg DESC;
+
+
+
+SELECT outcome, avg(coalc2012)
+FROM projenergy as pe
+LEFT JOIN projturnout as pt
+ON pe.statecodes = pt.stateabbr
+GROUP BY outcome
+HAVING outcome IS NOT NULL;
