@@ -52,3 +52,15 @@ CREATE TABLE projenergy(
 COPY projenergy
 FROM '/Users/metvertz/sqlenergy.csv'
 WITH(FORMAT CSV, HEADER);
+
+CREATE TABLE projturnout (
+    State text,
+    Stateabbr text,
+    Dem numeric(3,2),
+    Rep numeric(3,2),
+    Outcome varchar(1)
+);
+
+COPY projturnout
+FROM '/Users/metvertz/sqlturnout.csv'
+WITH(FORMAT CSV, HEADER);
