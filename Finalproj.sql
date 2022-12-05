@@ -64,3 +64,8 @@ CREATE TABLE projturnout (
 COPY projturnout
 FROM '/Users/metvertz/sqlturnout.csv'
 WITH(FORMAT CSV, HEADER);
+
+SELECT *
+FROM projenergy as pe
+LEFT JOIN projturnout as pt
+ON pe.statecodes = pt.stateabbr;
